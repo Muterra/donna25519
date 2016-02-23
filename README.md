@@ -1,3 +1,18 @@
+# What the fork?
+
+This is a fork of [AGL's existing repo](https://github.com/agl/curve25519-donna). There are three reasons it exists, in order:
+
+1. Add proper [documentation](doc/readme.md) for python (**extremely** high priority, aka done for the existing library)
+2. Fix unexpected behavior in python binding -- namely, make_shared should not force SHA-256 hashing of the shared secret (medium priority)
+3. Allow for future building of binary wheel distributions, because I spent an entire morning trying to get proper compilation working on my windows box (low priority) 
+
+That being said:
+
++ **Branch master:** Documentation update only, as of 23 Feb 2016
++ **Branch ymmv:** Remove prehashing of shared secret. Can be cloned and locally installed if you'd like.
+
+These branches will only be merged when the wheel distribution is available. At that point they will also be made available on pip as donna25519. There is no expected ETA on that. If you'd like it sooner, pay Muterra to do it (seriously not a joke, we're grossly understaffed and time is money).
+
 # curve25519-donna
 
 *Note*: this code is from 2008. Since that time, many more, great implementations of curve25519 have been written, including several amd64 assembly versions by djb. You are probably better served now by [NaCl](http://nacl.cr.yp.to) or [libsodium](https://github.com/jedisct1/libsodium).
