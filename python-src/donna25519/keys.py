@@ -29,22 +29,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ------------------------------------------------------
 
-Modified from code originally written by Brian Warner.
+Complete rewrite of code originally written by Brian Warner.
 '''
 
 from . import _curve25519
-from hashlib import sha256
 import os
 
-# the curve25519 functions are really simple, and could be used without an
-# OOP layer, but it's a bit too easy to accidentally swap the private and
-# public keys that way.
-
-def _hash_shared(shared):
-    return sha256(b"curve25519-shared:"+shared).digest()
-
-class Private():
+class PrivateKey():
     def __init__(self, secret=None):
+        ''' Creates a **new** PrivateKey from an optional secret. Do not
+        use this for loading existing keys!
+        '''
         # Generate secret if none is passed
         if secret is None:
             secret = os.urandom(32)
@@ -54,6 +49,16 @@ class Private():
             self._private = _curve25519.make_private(secret)
         except TypeError as e:
             raise TypeError('Secret must be more bytes-like (try bytes).')
+            
+    @classmethod
+    def load(cls, private):
+        ''' Loads a PrivateKey from an existing private key.
+        '''
+        # To hell with performance! Use the constructor to test validity.
+        # Yeah, okay, I'm just being lazy
+        self = cls(private)
+        self._private = private
+        return self
         
     @property
     def private(self):
@@ -67,15 +72,17 @@ class Private():
     def get_shared_key(self, public, hashfunc=None):
         if not isinstance(public, Public):
             raise ValueError("'public' must be an instance of Public")
-        if hashfunc is None:
-            hashfunc = _hash_shared
+            
         shared = _curve25519.make_shared(self.private, public.public)
-        return hashfunc(shared)
+        return shared
 
-class Public():
+class PublicKey():
     def __init__(self, public):
-        assert isinstance(public, bytes)
-        assert len(public) == 32
+        if not isinstance(public, bytes):
+            raise TypeError('Argument "public" must be bytes object.')
+        if len(public) != 32:
+            raise ValueError('Argument "public" must be 32 bytes long.')
+            
         self._public = public
         
     @property
