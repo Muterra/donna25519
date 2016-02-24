@@ -30,4 +30,4 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ------------------------------------------------------
 '''
 
-from .keys import Private, Public
+from .keys import PrivateKey, PublicKey

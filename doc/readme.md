@@ -7,8 +7,8 @@ Python bindings to Curve25519-Donna.
 ## Install and import:
 
 ```python
-pip install curve25519-donna
-import curve25519
+pip install donna25519
+import donna25519
 ```
 
 Installation notes: installation currently requires the ability to compile C extensions. In Windows, this can be a lengthy process, especially for a 64-bit build: 
@@ -27,10 +27,10 @@ CALL "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
 
 This library provides two public classes:
 
-+ ```Private```
-+ ```Public```
++ ```PrivateKey```
++ ```PublicKey```
 
-### ```class Private(secret=None, seed=None)```
+### ```class PrivateKey(secret=None)```
 
 Generates an ECDH private key on Curve25519, using AGL's Curve25519-donna implementation. This will be properly clamped, ie, avoid the following three steps referenced by DJB, as they will already be performed:
 
@@ -40,50 +40,35 @@ mysecret[31] &= 127;
 mysecret[31] |= 64;
 ```
 
+**Do not use this to load existing private keys; your key will be wrong!** Use ```PrivateKey.load()``` instead.
+
 #### argument ```secret=None```
 
 This value is directly passed to the underlying curve25519-donna library as the private key *d*. It must be securely random; for python, we suggest ```os.urandom()```, though this may be inappropriate for eg. servers, where entropy pools may deplete.
 
-If you call ```Private()``` with no arguments, it will securely default to a secret obtained from ```os.urandom()```.
+If you call ```PrivateKey()``` with no arguments, it will securely default to a secret obtained from ```os.urandom()```.
 
 Secret must be a bytes object of length 32.
 
-#### argument ```seed=None```
+#### classmethod ```PrivateKey.load(private)```
 
-This value is passed through the following pseudorandom permutation to generate a private key *d*:
+Loads an existing ECDH/Curve25519 private key. If loading from a different library or serialized key, ensure that the value has already been clamped, as explained above. If loading from this library, ```private``` should be the same value as was previously available from ```PrivateKey().private```.
 
-```python
-secret = sha256(b"curve25519-private:" + seed).digest()
-```
+#### ```PrivateKey().private```
 
-**We strongly recommend avoiding this argument entirely.** It still relies upon the entropy in the seed to generate the private key, and so it still should be suitably securely random. Passing ```os.urandom()``` to ```secret``` is a much preferable choice.
+Read-only attribute returning the ECDH/Curve25519 private key as a bytes object.
 
-If ```secret``` is passed to the constructor, ```seed``` must not be.
+#### ```PrivateKey().get_public()```
 
-Seed must be a bytes object of length 32.
+Returns the corresponding public key as a ```PublicKey()``` instance.
 
-#### ```Private().serialize()```
+#### ```PrivateKey().do_exchange(public)```
 
-Returns a bytes representation of the private key. **This function violates SEC 1 v2.0; it does not return the value with ASN.1 DER/PEM formatting, and instead returns a raw integer.** It is exactly equivalent to ```Private().private```.
+Performs a key exchange between ```PrivateKey()``` and ```public```, resulting in a shared secret. Outputs a bytes object of length 32. This shared secret should always be passed to an appropriate key derivation function before use. In this context, hashing may be an appropriate KDF.
 
-Return length is 32 bytes.
+```public``` must be a PublicKey instance.
 
-#### ```Private().get_public()```
-
-Returns the corresponding public key as a ```Public()``` instance.
-
-#### ```Private().get_shared_key(public, hashfunc=None)```
-
-Performs a key exchange between ```Private()``` and ```public```, resulting in a shared secret. Outputs a bytes object of length 32. This shared secret should always be passed to an appropriate key derivation function before use. In this context, hashing may be an appropriate KDF.
-
-```hashfunc``` will pre-hash the resulting secret before returning it. **Note that, counter-intuitively, if it is left as ```None```, it will be passed through hashlib's SHA-256 before return.** If you would like the raw secret to pass to your own KDF, it is probably easiest to define a no-op hash function, for example:
-
-```python
-noop = lambda x: x
-Private().get_shared_key(public, hashfunc=noop)
-```
-
-### ```class Public(public)```
+### ```class PublicKey(public)```
 
 Stores an ECDH public key.
 
@@ -91,8 +76,6 @@ Stores an ECDH public key.
 
 The ECDH/Curve25519 public key. Must be a bytes object of length 32.
 
-#### ```Public().serialize()```
+#### ```PublicKey().public```
 
-Returns a bytes representation of the public key. **This function violates SEC 1 v2.0; it does not return the value with ASN.1 DER/PEM formatting, and instead returns a raw integer.** It is exactly equivalent to ```Public().public```.
-
-Return length is 32 bytes.
+Read-only attribute returning the ECDH/Curve25519 public key as a bytes object.

@@ -32,16 +32,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #! /usr/bin/python
 
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 
-version = '0.1a1'
+version = '0.1.0'
 
-ext_modules = [Extension("curve25519._curve25519",
-                         ["python-src/curve25519/curve25519module.c",
-                          "curve25519-donna.c"],
+ext_modules = [Extension("donna25519._curve25519",
+                         ["donna25519/donna25519module.c",
+                          "curve25519-donna/curve25519-donna.c"],
                          )]
 
-short_description="Python wrapper for the Curve25519 cryptographic library"
+short_description="Python wrapper for the Curve25519-donna cryptographic library"
 long_description="""\
 Curve25519 is a fast elliptic-curve key-agreement protocol, in which two
 parties Alice and Bob each generate a (public,private) keypair, exchange
@@ -61,12 +61,11 @@ setup(name="donna25519",
       version=version,
       description=short_description,
       long_description=long_description,
-      author="Nick Badger, Brian Warner",
-      url='https://github.com/Muterra/curve25519-donna',
+      author="Nick Badger",
+      url='https://github.com/Muterra/donna25519',
       author_email="badg@muterra.io",
       license="BSD",
-      packages=["curve25519", "curve25519.test"],
-      package_dir={"curve25519": "python-src/curve25519"},
+      packages=find_packages(exclude=['contrib', 'doc', 'tests*']),
       ext_modules=ext_modules,
       # keywords='smartyparse, data structure, dynamic, binary, parser, builder, pack, unpack',
       # # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
