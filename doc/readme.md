@@ -60,7 +60,7 @@ secret = sha256(b"curve25519-private:" + seed).digest()
 
 If ```secret``` is passed to the constructor, ```seed``` must not be.
 
-Secret must be a bytes object of length 32.
+Seed must be a bytes object of length 32.
 
 #### ```Private().serialize()```
 
