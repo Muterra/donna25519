@@ -1,3 +1,6 @@
+[![Code Climate](https://codeclimate.com/github/Muterra/donna25519/badges/gpa.svg)](https://codeclimate.com/github/Muterra/donna25519)
+[![Build Status](https://travis-ci.org/Muterra/donna25519.svg?branch=master)](https://travis-ci.org/Muterra/donna25519)
+
 # What the fork?
 
 This is a reorganization and rewrite of Brian Warner's python bindings to [AGL's curve25519-donna C implementation](https://github.com/agl/curve25519-donna). Please read his readme (follow that link) before use. Documentation for python usage can be found in [/doc](/doc). 
