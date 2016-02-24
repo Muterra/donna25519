@@ -27,10 +27,10 @@ CALL "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
 
 This library provides two public classes:
 
-+ ```Private```
-+ ```Public```
++ ```PrivateKey```
++ ```PublicKey```
 
-### ```class Private(secret=None)```
+### ```class PrivateKey(secret=None)```
 
 Generates an ECDH private key on Curve25519, using AGL's Curve25519-donna implementation. This will be properly clamped, ie, avoid the following three steps referenced by DJB, as they will already be performed:
 
@@ -40,27 +40,35 @@ mysecret[31] &= 127;
 mysecret[31] |= 64;
 ```
 
+**Do not use this to load existing private keys; your key will be wrong!** Use ```PrivateKey.load()``` instead.
+
 #### argument ```secret=None```
 
 This value is directly passed to the underlying curve25519-donna library as the private key *d*. It must be securely random; for python, we suggest ```os.urandom()```, though this may be inappropriate for eg. servers, where entropy pools may deplete.
 
-If you call ```Private()``` with no arguments, it will securely default to a secret obtained from ```os.urandom()```.
+If you call ```PrivateKey()``` with no arguments, it will securely default to a secret obtained from ```os.urandom()```.
 
 Secret must be a bytes object of length 32.
 
-#### ```Private().private```
+#### classmethod ```PrivateKey.load(private)```
 
-Read-only attribute returning the ECDH/Curve25519 public key as a bytes object.
+Loads an existing ECDH/Curve25519 private key. If loading from a different library or serialized key, ensure that the value has already been clamped, as explained above. If loading from this library, ```private``` should be the same value as was previously available from ```PrivateKey().private```.
 
-#### ```Private().get_public()```
+#### ```PrivateKey().private```
 
-Returns the corresponding public key as a ```Public()``` instance.
+Read-only attribute returning the ECDH/Curve25519 private key as a bytes object.
 
-#### ```Private().get_shared_key(public)```
+#### ```PrivateKey().get_public()```
 
-Performs a key exchange between ```Private()``` and ```public```, resulting in a shared secret. Outputs a bytes object of length 32. This shared secret should always be passed to an appropriate key derivation function before use. In this context, hashing may be an appropriate KDF.
+Returns the corresponding public key as a ```PublicKey()``` instance.
 
-### ```class Public(public)```
+#### ```PrivateKey().do_exchange(public)```
+
+Performs a key exchange between ```PrivateKey()``` and ```public```, resulting in a shared secret. Outputs a bytes object of length 32. This shared secret should always be passed to an appropriate key derivation function before use. In this context, hashing may be an appropriate KDF.
+
+```public``` must be a PublicKey instance.
+
+### ```class PublicKey(public)```
 
 Stores an ECDH public key.
 
@@ -68,6 +76,6 @@ Stores an ECDH public key.
 
 The ECDH/Curve25519 public key. Must be a bytes object of length 32.
 
-#### ```Public().public```
+#### ```PublicKey().public```
 
 Read-only attribute returning the ECDH/Curve25519 public key as a bytes object.

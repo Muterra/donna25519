@@ -1,16 +1,18 @@
 # What the fork?
 
-This is a fork of [AGL's existing repo](https://github.com/agl/curve25519-donna). There are three reasons it exists, in order:
+This is a fork of [AGL's existing repo](https://github.com/agl/curve25519-donna). There are several reasons it exists, in order:
 
 1. Add proper [documentation](/python-src/doc/readme.md) for python (**extremely** high priority, aka done for the existing library)
-2. Fix unexpected behavior in python binding -- namely, make_shared should not force SHA-256 hashing of the shared secret (medium priority)
-3. Fix several python security vulnerabilities, ex use of assert (medium priority)
-4. Allow for future building of binary wheel distributions, because I spent an entire morning trying to get proper compilation working on my windows box (low priority) 
+2. Test all functions against NaCl test vectors.
+3. Fix unexpected behavior in python binding -- namely, make_shared should not force SHA-256 hashing of the shared secret (medium priority)
+4. Fix several python security vulnerabilities, ex use of assert (medium priority)
+5. Allow for future building of binary wheel distributions, because I spent an entire morning trying to get proper compilation working on my windows box (low priority) 
+6. Various other API tweaks and things (low priority)
 
 That being said:
 
 + **Branch master:** Documentation update only, as of 23 Feb 2016
-+ **Branch ymmv:** Remove prehashing of shared secret and patched vulnerabilities. Can be cloned and locally installed if you'd like.
++ **Branch ymmv:** All of the above (except binary wheels). Can be cloned and installed via ```git clone -b ymmv https://github.com/Muterra/curve25519-donna``` and ```pip install python-src```
 
 These branches will only be merged when the wheel distribution is available. At that point they will also be made available on pip as donna25519. There is no expected ETA on that. If you'd like it sooner, pay Muterra to do it (seriously not a joke, we're grossly understaffed and time is money).
 

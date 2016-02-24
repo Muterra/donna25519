@@ -44,11 +44,14 @@ class PrivateKey():
         if secret is None:
             secret = os.urandom(32)
         
-        # Try and catch
-        try:
-            self._private = _curve25519.make_private(secret)
-        except TypeError as e:
-            raise TypeError('Secret must be more bytes-like (try bytes).')
+        # Type check. I'd like to duck type, but the C binding doesn't support
+        # it (at least for now).
+        if not isinstance(secret, bytes):
+            raise TypeError('Secret must be bytes object.')
+        if len(secret) != 32:
+            raise ValueError('Secret must be 32 bytes long.')
+            
+        self._private = _curve25519.make_private(secret)
             
     @classmethod
     def load(cls, private):
@@ -62,18 +65,18 @@ class PrivateKey():
         
     @property
     def private(self):
-        ''' Read-only to help insulate accidental deletions.
+        ''' Read-only to help insulate accidental deletions and modifications.
         '''
         return self._private
 
     def get_public(self):
-        return Public(_curve25519.make_public(self.private))
+        return PublicKey(_curve25519.make_public(self.private))
 
-    def get_shared_key(self, public, hashfunc=None):
-        if not isinstance(public, Public):
-            raise ValueError("'public' must be an instance of Public")
+    def do_exchange(self, public_key):
+        if not isinstance(public_key, PublicKey):
+            raise TypeError('"public_key" must be an instance of PublicKey.')
             
-        shared = _curve25519.make_shared(self.private, public.public)
+        shared = _curve25519.make_shared(self.private, public_key.public)
         return shared
 
 class PublicKey():
