@@ -17,7 +17,7 @@ The original Warner *bindings* (aka glue Cython) remain (currently) mostly uncha
 **All of the above have been completed, except binary wheel distributions.** This repo can be cloned and installed via 
 
 ```
-git clone https://github.com/Muterra/curve25519-donna
+git clone https://github.com/Muterra/donna25519
 pip install .
 ```
 

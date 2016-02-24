@@ -4,8 +4,22 @@ Python bindings to Curve25519-Donna.
 
 ## Install and import:
 
-```python
+(Eventually) from Pip:
+
+```
 pip install donna25519
+```
+
+From source:
+
+```
+git clone https://github.com/Muterra/donna25519
+pip install .
+```
+
+Importing:
+
+```python
 import donna25519
 ```
 
