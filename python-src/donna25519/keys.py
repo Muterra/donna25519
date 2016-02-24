@@ -49,11 +49,11 @@ class Private():
         if secret is None:
             secret = os.urandom(32)
         
-        # Check any passed secrets against the buffer interface while 
-        # potentially reducing copies
-        secret = memoryview(secret)
-            
-        self._private = _curve25519.make_private(secret)
+        # Try and catch
+        try:
+            self._private = _curve25519.make_private(secret)
+        except TypeError as e:
+            raise TypeError('Secret must be more bytes-like (try bytes).')
         
     @property
     def private(self):

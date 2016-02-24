@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ------------------------------------------------------
 
-Modified (slightly) from code originally written by Brian Warner.
+Modified (slightly) by Muterra from code originally written by Brian Warner.
 */
 
 /* tell python that PyArg_ParseTuple(t#) means Py_ssize_t, not int */
