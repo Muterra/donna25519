@@ -1,5 +1,3 @@
-This documentation has been created and maintained by Muterra, Inc. Muterra retains the copyright to it, but it may be redistributed under the BSD license, as noted in LICENSE.md.
-
 # donna25519 overview
 
 Python bindings to Curve25519-Donna.
