@@ -30,7 +30,7 @@ This library provides two public classes:
 + ```Private```
 + ```Public```
 
-### ```class Private(secret=None, seed=None)```
+### ```class Private(secret=None)```
 
 Generates an ECDH private key on Curve25519, using AGL's Curve25519-donna implementation. This will be properly clamped, ie, avoid the following three steps referenced by DJB, as they will already be performed:
 
