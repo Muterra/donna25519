@@ -52,7 +52,7 @@ int curve25519_donna(char *mypublic,
                      const char *secret, const char *basepoint);
 
 static PyObject *
-pycurve25519_makeprivate(PyObject *self, PyObject *args)
+pydonna25519_makeprivate(PyObject *self, PyObject *args)
 {
     char *in1;
     Py_ssize_t in1len;
@@ -69,7 +69,7 @@ pycurve25519_makeprivate(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-pycurve25519_makepublic(PyObject *self, PyObject *args)
+pydonna25519_makepublic(PyObject *self, PyObject *args)
 {
     const char *private;
     char mypublic[32];
@@ -86,7 +86,7 @@ pycurve25519_makepublic(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-pycurve25519_makeshared(PyObject *self, PyObject *args)
+pydonna25519_makeshared(PyObject *self, PyObject *args)
 {
     const char *myprivate, *theirpublic;
     char shared_key[32];
@@ -109,9 +109,9 @@ pycurve25519_makeshared(PyObject *self, PyObject *args)
 
 static PyMethodDef
 curve25519_functions[] = {
-    {"make_private", pycurve25519_makeprivate, METH_VARARGS, "data->private"},
-    {"make_public", pycurve25519_makepublic, METH_VARARGS, "private->public"},
-    {"make_shared", pycurve25519_makeshared, METH_VARARGS, "private+public->shared"},
+    {"make_private", pydonna25519_makeprivate, METH_VARARGS, "data->private"},
+    {"make_public", pydonna25519_makepublic, METH_VARARGS, "private->public"},
+    {"make_shared", pydonna25519_makeshared, METH_VARARGS, "private+public->shared"},
     {NULL, NULL, 0, NULL},
 };
 

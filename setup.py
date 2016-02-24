@@ -37,7 +37,7 @@ from setuptools import setup, Extension, find_packages
 version = '0.1a1'
 
 ext_modules = [Extension("donna25519._curve25519",
-                         ["python-src/donna25519/curve25519module.c",
+                         ["python-src/donna25519/donna25519module.c",
                           "curve25519-donna.c"],
                          )]
 
@@ -65,6 +65,7 @@ setup(name="donna25519",
       url='https://github.com/Muterra/curve25519-donna',
       author_email="badg@muterra.io",
       license="BSD",
+      package_dir={"donna25519": "python-src/donna25519"},
       packages=find_packages(exclude=['contrib', 'doc', 'tests*']),
       ext_modules=ext_modules,
       # keywords='smartyparse, data structure, dynamic, binary, parser, builder, pack, unpack',
