@@ -48,20 +48,6 @@ If you call ```Private()``` with no arguments, it will securely default to a sec
 
 Secret must be a bytes object of length 32.
 
-#### argument ```seed=None```
-
-This value is passed through the following pseudorandom permutation to generate a private key *d*:
-
-```python
-secret = sha256(b"curve25519-private:" + seed).digest()
-```
-
-**We strongly recommend avoiding this argument entirely.** It still relies upon the entropy in the seed to generate the private key, and so it still should be suitably securely random. Passing ```os.urandom()``` to ```secret``` is a much preferable choice.
-
-If ```secret``` is passed to the constructor, ```seed``` must not be.
-
-Seed must be a bytes object of length 32.
-
 #### ```Private().private```
 
 Read-only attribute returning the ECDH/Curve25519 public key as a bytes object.

@@ -43,17 +43,16 @@ import os
 def _hash_shared(shared):
     return sha256(b"curve25519-shared:"+shared).digest()
 
-class Private:
-    def __init__(self, secret=None, seed=None):
+class Private():
+    def __init__(self, secret=None):
+        # Generate secret if none is passed
         if secret is None:
-            if seed is None:
-                secret = os.urandom(32)
-            else:
-                secret = sha256(b"curve25519-private:"+seed).digest()
-        else:
-            assert seed is None, "provide secret, seed, or neither, not both"
-        if not isinstance(secret, bytes) or len(secret) != 32:
-            raise TypeError("secret= must be 32-byte string")
+            secret = os.urandom(32)
+        
+        # Check any passed secrets against the buffer interface while 
+        # potentially reducing copies
+        secret = memoryview(secret)
+            
         self._private = _curve25519.make_private(secret)
         
     @property
@@ -73,7 +72,7 @@ class Private:
         shared = _curve25519.make_shared(self.private, public.public)
         return hashfunc(shared)
 
-class Public:
+class Public():
     def __init__(self, public):
         assert isinstance(public, bytes)
         assert len(public) == 32
