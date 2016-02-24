@@ -60,28 +60,19 @@ secret = sha256(b"curve25519-private:" + seed).digest()
 
 If ```secret``` is passed to the constructor, ```seed``` must not be.
 
-Secret must be a bytes object of length 32.
+Seed must be a bytes object of length 32.
 
-#### ```Private().serialize()```
+#### ```Private().private```
 
-Returns a bytes representation of the private key. **This function violates SEC 1 v2.0; it does not return the value with ASN.1 DER/PEM formatting, and instead returns a raw integer.** It is exactly equivalent to ```Private().private```.
-
-Return length is 32 bytes.
+Read-only attribute returning the ECDH/Curve25519 public key as a bytes object.
 
 #### ```Private().get_public()```
 
 Returns the corresponding public key as a ```Public()``` instance.
 
-#### ```Private().get_shared_key(public, hashfunc=None)```
+#### ```Private().get_shared_key(public)```
 
 Performs a key exchange between ```Private()``` and ```public```, resulting in a shared secret. Outputs a bytes object of length 32. This shared secret should always be passed to an appropriate key derivation function before use. In this context, hashing may be an appropriate KDF.
-
-```hashfunc``` will pre-hash the resulting secret before returning it. **Note that, counter-intuitively, if it is left as ```None```, it will be passed through hashlib's SHA-256 before return.** If you would like the raw secret to pass to your own KDF, it is probably easiest to define a no-op hash function, for example:
-
-```python
-noop = lambda x: x
-Private().get_shared_key(public, hashfunc=noop)
-```
 
 ### ```class Public(public)```
 
@@ -91,8 +82,6 @@ Stores an ECDH public key.
 
 The ECDH/Curve25519 public key. Must be a bytes object of length 32.
 
-#### ```Public().serialize()```
+#### ```Public().public```
 
-Returns a bytes representation of the public key. **This function violates SEC 1 v2.0; it does not return the value with ASN.1 DER/PEM formatting, and instead returns a raw integer.** It is exactly equivalent to ```Public().public```.
-
-Return length is 32 bytes.
+Read-only attribute returning the ECDH/Curve25519 public key as a bytes object.
