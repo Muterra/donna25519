@@ -2,7 +2,7 @@
 
 This is a fork of [AGL's existing repo](https://github.com/agl/curve25519-donna). There are three reasons it exists, in order:
 
-1. Add proper [documentation](doc/readme.md) for python (**extremely** high priority, aka done for the existing library)
+1. Add proper [documentation](/python-src/doc/readme.md) for python (**extremely** high priority, aka done for the existing library)
 2. Fix unexpected behavior in python binding -- namely, make_shared should not force SHA-256 hashing of the shared secret (medium priority)
 3. Fix several python security vulnerabilities, ex use of assert (medium priority)
 4. Allow for future building of binary wheel distributions, because I spent an entire morning trying to get proper compilation working on my windows box (low priority) 

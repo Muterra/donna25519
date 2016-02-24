@@ -7,8 +7,8 @@ Python bindings to Curve25519-Donna.
 ## Install and import:
 
 ```python
-pip install curve25519-donna
-import curve25519
+pip install donna25519
+import donna25519
 ```
 
 Installation notes: installation currently requires the ability to compile C extensions. In Windows, this can be a lengthy process, especially for a 64-bit build: 
