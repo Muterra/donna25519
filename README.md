@@ -7,7 +7,7 @@ This is a reorganization and rewrite of Brian Warner's python bindings to [AGL's
 
 The original Warner *bindings* (aka glue Cython) remain (currently) mostly unchanged, but the python code has been entirely rewritten. There are several reasons this rewrap exists, in order:
 
-1. Add proper [documentation](/python-src/doc/readme.md) for python (**extremely** high priority)
+1. Add proper [documentation](/doc) for python (**extremely** high priority)
 2. Test all functions against NaCl test vectors, and generally provide better testing coverage (high priority)
 3. Fix unexpected behavior in python binding -- namely, make_shared should not force SHA-256 hashing of the shared secret (medium priority)
 4. Fix several python security vulnerabilities, ex use of assert (medium priority)
