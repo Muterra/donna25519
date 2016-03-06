@@ -65,7 +65,7 @@ setup(name="donna25519",
       url='https://github.com/Muterra/donna25519',
       author_email="badg@muterra.io",
       license="BSD",
-      packages=find_packages(exclude=['contrib', 'doc', 'tests*']),
+      packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
       ext_modules=ext_modules,
       # keywords='smartyparse, data structure, dynamic, binary, parser, builder, pack, unpack',
       # # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
