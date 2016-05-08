@@ -13,13 +13,13 @@
 **Installing:**
 
 ```
-    pip install donna25519
+pip install donna25519
 ```
 
 **Importing:**
 
 ```python
-    import donna25519
+import donna25519
 ```
 
 ### Windows (Python 3.3)
@@ -38,7 +38,7 @@ Donna25519 must be compiled from source on Linux. For that, you will need a comp
 
 As with Linux, you will be compiling from source and need to build C code. Unfortunately we don't have any experience to share here.
 
-**Note:** this library is *wholly untested* on Mac. If you get it running, we would be ecstatic to know.
+**Note:** this library is *wholly untested* on Mac. It should work, but we haven't observed it doing so. If you get it running, we would be ecstatic to know.
 
 # What the fork?
 
