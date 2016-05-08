@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from setuptools import setup, Extension, find_packages
 
-version = '0.1.0'
+version = '0.1.1'
 
 ext_modules = [Extension("donna25519._curve25519",
                          ["donna25519/donna25519module.c",
@@ -43,18 +43,20 @@ ext_modules = [Extension("donna25519._curve25519",
 
 short_description="Python wrapper for the Curve25519-donna cryptographic library"
 long_description="""\
-Curve25519 is a fast elliptic-curve key-agreement protocol, in which two
-parties Alice and Bob each generate a (public,private) keypair, exchange
-public keys, and can then compute the same shared key. Specifically, Alice
-computes F(Aprivate, Bpublic), Bob computes F(Bprivate, Apublic), and both
-get the same value (and nobody else can guess that shared value, even if they
-know Apublic and Bpublic).
+Curve 25519 is an elliptic curve cryptography key-agreement protocol.
 
-This is a Python wrapper for the portable 'curve25519-donna' implementation
-of this algorithm, written by Adam Langley, hosted at
-https://github.com/agl/curve25519-donna
+Two parties, Alice and Bob, first generate their (public, private) 
+keypairs. They then exchange public keys on an insecure channel, and 
+use the protocol to establish a shared secret between them.
 
-Documentation is available at https://github.com/Muterra/curve25519-donna
+This is a Python wrapper for the 'curve25519-donna' library for the 
+curve 25519 elliptic curve Diffie-Hellman key exchange algorithm. The
+portable C 'Donna' library was written by Adam Langley, and is hosted 
+at https://github.com/agl/curve25519-donna. This library is a near-
+complete rewrite of an earlier python wrapper written by Brian Warner 
+of Mozilla.
+
+Documentation is available at https://github.com/Muterra/donna25519.
 """
 
 setup(name="donna25519",
@@ -67,28 +69,30 @@ setup(name="donna25519",
       license="BSD",
       packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
       ext_modules=ext_modules,
-      # keywords='smartyparse, data structure, dynamic, binary, parser, builder, pack, unpack',
-      # # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
-      # classifiers=[
-      #     # How mature is this project? Common values are
-      #     #   3 - Alpha
-      #     #   4 - Beta
-      #     #   5 - Production/Stable
-      #     'Development Status :: 3 - Alpha',
+      keywords='curve25519, curve 25519, donna, cryptography, ecdh, ecdhe, '
+          'elliptic curve cryptography, ecc, diffie hellman, key agreement',
+      # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
+      classifiers=[
+          # How mature is this project? Common values are
+          #   3 - Alpha
+          #   4 - Beta
+          #   5 - Production/Stable
+          'Development Status :: 4 - Beta',
 
-      #     # Indicate who your project is intended for
-      #     'Intended Audience :: Developers',
-      #     'Topic :: Software Development',
-      #     'Topic :: Utilities',
+          # Indicate who your project is intended for
+          'Intended Audience :: Developers',
+          'Topic :: Security :: Cryptography',
+          'Topic :: Software Development',
+          'Topic :: Utilities',
 
-      #     # Pick your license as you wish (should match "license" above)
-      #     'License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)',
+          # Pick your license as you wish (should match "license" above)
+          'License :: OSI Approved :: BSD License',
 
-      #     # Specify the Python versions you support here. In particular, ensure
-      #     # that you indicate whether you support Python 2, Python 3 or both.
-      #     'Programming Language :: Python :: 3',
-      #     'Programming Language :: Python :: 3.3',
-      #     'Programming Language :: Python :: 3.4',
-      #     'Programming Language :: Python :: 3.5',
-      # ],
+          # Specify the Python versions you support here. In particular, ensure
+          # that you indicate whether you support Python 2, Python 3 or both.
+          'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.3',
+          'Programming Language :: Python :: 3.4',
+          'Programming Language :: Python :: 3.5',
+      ],
       )
