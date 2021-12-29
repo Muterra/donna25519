@@ -54,7 +54,7 @@ int curve25519_donna(char *mypublic,
 static PyObject *
 pydonna25519_makeprivate(PyObject *self, PyObject *args)
 {
-    char *in1;
+    const char *in1;
     Py_ssize_t in1len;
     if (!PyArg_ParseTuple(args, y"#:clamp", &in1, &in1len))
         return NULL;
@@ -62,10 +62,12 @@ pydonna25519_makeprivate(PyObject *self, PyObject *args)
         PyErr_SetString(PyExc_ValueError, "input must be 32-byte string");
         return NULL;
     }
-    in1[0] &= 248;
-    in1[31] &= 127;
-    in1[31] |= 64;
-    return PyBytes_FromStringAndSize((char *)in1, 32);
+    char clamped[32];
+    memcpy(clamped, in1, 32);
+    clamped[0] &= 248;
+    clamped[31] &= 127;
+    clamped[31] |= 64;
+    return PyBytes_FromStringAndSize((char *)clamped, 32);
 }
 
 static PyObject *
