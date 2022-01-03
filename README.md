@@ -1,6 +1,8 @@
 [![Code Climate](https://codeclimate.com/github/Muterra/donna25519/badges/gpa.svg)](https://codeclimate.com/github/Muterra/donna25519)
 [![Build Status](https://travis-ci.org/Muterra/donna25519.svg?branch=master)](https://travis-ci.org/Muterra/donna25519)
 
+**Deprecation notice:** This library is no longer maintained.
+
 # Two important notes
 
 1. be sure to run the output of the shared secret agreement through an appropriate KDF before use. A good hash function may suffice.
