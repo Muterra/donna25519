@@ -1,7 +1,9 @@
-[![Code Climate](https://codeclimate.com/github/Muterra/donna25519/badges/gpa.svg)](https://codeclimate.com/github/Muterra/donna25519)
-[![Build Status](https://travis-ci.org/Muterra/donna25519.svg?branch=master)](https://travis-ci.org/Muterra/donna25519)
+# ❗❗ This project is deprecated and unmaintained. ❗❗
 
-**Deprecation notice:** This library is no longer maintained.
+This library is no longer maintained, and x25519 is available from **much** better sources.
+Please use the ``cryptography`` library instead. x25519 is available there under [asymmetric primitives](https://cryptography.io/en/latest/hazmat/primitives/asymmetric/x25519/).
+
+-----
 
 # Two important notes
 
